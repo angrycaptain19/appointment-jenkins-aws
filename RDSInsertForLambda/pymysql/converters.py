@@ -41,7 +41,7 @@ def escape_sequence(val, charset, mapping=None):
     return "(" + ",".join(n) + ")"
 
 def escape_set(val, charset, mapping=None):
-    return ','.join([escape_item(x, charset, mapping) for x in val])
+    return ','.join(escape_item(x, charset, mapping) for x in val)
 
 def escape_bool(value, mapping=None):
     return str(int(value))
@@ -236,13 +236,12 @@ def convert_timedelta(obj):
         negate = -1 if groups[0] else 1
         hours, minutes, seconds, microseconds = groups[1:]
 
-        tdelta = datetime.timedelta(
+        return datetime.timedelta(
             hours = int(hours),
             minutes = int(minutes),
             seconds = int(seconds),
             microseconds = int(microseconds)
             ) * negate
-        return tdelta
     except ValueError:
         return obj
 
