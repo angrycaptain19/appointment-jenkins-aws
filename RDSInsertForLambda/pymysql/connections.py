@@ -525,11 +525,10 @@ class Connection(object):
         :raise Error: If the connection is closed and reconnect=False.
         """
         if self._sock is None:
-            if reconnect:
-                self.connect()
-                reconnect = False
-            else:
+            if not reconnect:
                 raise err.Error("Already closed")
+            self.connect()
+            reconnect = False
         try:
             self._execute_command(COMMAND.COM_PING, "")
             self._read_ok_packet()
